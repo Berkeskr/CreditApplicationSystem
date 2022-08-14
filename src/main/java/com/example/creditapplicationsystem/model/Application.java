@@ -12,9 +12,10 @@ public class Application {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long referenceNumber;
 
-    private String status;
+    private String status; //Accepted or Rejected
     private int creditLimit;
-    @OneToOne
+
+    @ManyToOne
     @JoinColumn(name = "customer")
     private Customer customer;
 }
