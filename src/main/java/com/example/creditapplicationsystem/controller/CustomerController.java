@@ -5,9 +5,7 @@ import com.example.creditapplicationsystem.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -24,7 +22,7 @@ public class CustomerController {
         return ResponseEntity.ok(allCustomers);
     }
     @GetMapping("/customer/{SSN}")
-    public ResponseEntity getCustomerBySSN(@PathVariable Long SSN){
+    public ResponseEntity getCustomerBySSN(@PathVariable String SSN){
         Customer customerBySSN = customerService.getCustomerBySSN(SSN);
         return ResponseEntity.ok(customerBySSN);
     }
@@ -34,12 +32,12 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
     }
     @DeleteMapping("/customer/{SSN}")
-    public ResponseEntity deleteCustomerBySSN(@PathVariable(name = "SSN") Long SSN){
+    public ResponseEntity deleteCustomerBySSN(@PathVariable(name = "SSN") String SSN){
         customerService.deleteCustomerBySSN(SSN);
         return ResponseEntity.ok("Customer Deleted");
     }
     @PutMapping("/customer/{SSN}")
-    public ResponseEntity updateCustomerBySSN(@PathVariable(name = "SSN") Long ssn,@RequestBody Customer customer){
+    public ResponseEntity updateCustomerBySSN(@PathVariable(name = "SSN") String ssn,@RequestBody Customer customer){
         Customer updatedCustomer = customerService.updateCustomer(ssn, customer);
         return ResponseEntity.status(HttpStatus.OK).body(updatedCustomer);
     }
