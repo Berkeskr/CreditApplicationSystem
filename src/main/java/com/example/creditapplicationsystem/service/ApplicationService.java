@@ -5,23 +5,23 @@ import com.example.creditapplicationsystem.model.Customer;
 import com.example.creditapplicationsystem.model.dto.ApplicationDTO;
 import com.example.creditapplicationsystem.model.mapper.ApplicationMapper;
 import com.example.creditapplicationsystem.repository.ApplicationRepo;
-import com.example.creditapplicationsystem.repository.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ApplicationService {
     @Autowired
     private ApplicationRepo applicationRepo;
     @Autowired
-    private CustomerRepo customerRepo;
+    private CustomerService customerService;
     @Autowired
     private ConfirmationService confirmationService;
 
     public ApplicationDTO applyForCredit(String customerSSN){
-        Customer customer = customerRepo.findBySSN(customerSSN);
+        Customer customer = customerService.getCustomerBySSN(customerSSN);
 
 
         Application application=new Application();
@@ -34,9 +34,11 @@ public class ApplicationService {
 
     }
 
-    public ApplicationDTO trackApplication(String SSN){
-        Customer customer = customerRepo.findBySSN(SSN);
-        return ApplicationMapper.toDTO(customer.getApplication());
+    public List<ApplicationDTO> trackApplication(String SSN){
+        Customer customer = customerService.getCustomerBySSN(SSN);
+        return customer.getApplication().
+                stream().map(ApplicationMapper::toDTO)
+                .collect(Collectors.toList());
 
     }
 }

@@ -19,7 +19,7 @@ public class ConfirmationService {
     public int calculateLimit(int creditScore, double salary){
         if(creditScore<500){
             return 0;
-        }else if(creditScore<1000&&creditScore>=500){
+        }else if(creditScore<1000){
             if (salary<5000.0){
                 return 10000;
             }else{
