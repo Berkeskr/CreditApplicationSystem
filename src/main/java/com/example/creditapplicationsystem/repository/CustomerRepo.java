@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomerRepo extends JpaRepository <Customer,Long>{
-    Customer findBySSN(Long SSN);
-    void deleteBySSN(Long SSN);
+    Customer findBySSN(String SSN);
+    void deleteBySSN(String SSN);
 }
